@@ -10,10 +10,13 @@ public class EcommerceApplication extends SpringBootServletInitializer {
 
     public static void main(String[] args) {
         SpringApplication.run(EcommerceApplication.class, args);
+        System.out.print("Hello Devops :) ");
     }
 
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
         return builder.sources(EcommerceApplication.class);
+        
+        
     }
 }
