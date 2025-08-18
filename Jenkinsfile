@@ -2,8 +2,8 @@ pipeline {
     agent any
 
     tools {
-        maven "Maven"     // Configure in Jenkins -> Global Tool Configuration
-        jdk "jdk"          // Configure in Jenkins -> Global Tool Configuration
+        maven "Maven"
+        jdk "jdk"
     }
 
     stages {
@@ -11,13 +11,13 @@ pipeline {
             steps {
                 git branch: 'main',
                     url: 'https://github.com/YogaNarsiReddy/ecommerce-backend.git',
-                    credentialsId: 'github-creds'   // Use GitHub PAT credential you added in Jenkins
+                    credentialsId: 'github-creds'
             }
         }
 
         stage('Build') {
             steps {
-                bat "mvn clean package -DskipTests"   // Windows-friendly
+                bat "mvn clean package -DskipTests"
             }
         }
 
@@ -30,6 +30,18 @@ pipeline {
         stage('Archive Artifacts') {
             steps {
                 archiveArtifacts artifacts: 'target/*.war', fingerprint: true
+            }
+        }
+
+        stage('Deploy to Tomcat') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'tomcat-creds', usernameVariable: 'admin', passwordVariable: 'admin')]) {
+                    bat """
+                        curl -u %USERNAME%:%PASSWORD% ^
+                        --upload-file target\\ecommerce-backend.war ^
+                        "http://localhost:2005/manager/text/deploy?path=/ecommerce&update=true"
+                    """
+                }
             }
         }
     }
