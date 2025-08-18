@@ -38,8 +38,9 @@ pipeline {
                 withCredentials([usernamePassword(credentialsId: 'tomcat-creds', usernameVariable: 'admin', passwordVariable: 'admin')]) {
                     bat """
                         curl -u %USERNAME%:%PASSWORD% ^
-                        --upload-file target\\ecommerce-backend.war ^
-                        "http://localhost:2005/manager/text/deploy?path=/ecommerce&update=true"
+                        --upload-file target\\myspringboot.war ^
+                        "http://localhost:2005/manager/text/deploy?path=/myspringboot&update=true"
+
                     """
                 }
             }
