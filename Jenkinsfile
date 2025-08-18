@@ -2,33 +2,41 @@ pipeline {
     agent any
 
     tools {
-        jdk 'jdk'          // Configure in Jenkins -> Global Tool Configuration
-        maven 'Maven'       // Configure in Jenkins -> Global Tool Configuration
+        maven "Maven"     // Configure in Jenkins -> Global Tool Configuration
+        jdk "jdk"          // Configure in Jenkins -> Global Tool Configuration
     }
 
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/YogaNarsiReddy/ecommerce-backend.git'
+                git branch: 'main',
+                    url: 'https://github.com/YogaNarsiReddy/ecommerce-backend.git',
+                    credentialsId: 'github-creds'   // Use GitHub PAT credential you added in Jenkins
             }
         }
 
         stage('Build') {
             steps {
-                bat 'mvn clean package -DskipTests'  // use sh if Linux
+                bat "mvn clean package -DskipTests"   // Windows-friendly
             }
         }
 
-        stage('Run Tests') {
+        stage('Test') {
             steps {
-                bat 'mvn test'
+                bat "mvn test"
             }
         }
 
-        stage('Archive JAR') {
+        stage('Archive Artifacts') {
             steps {
                 archiveArtifacts artifacts: 'target/*.jar', fingerprint: true
             }
+        }
+    }
+
+    post {
+        always {
+            echo 'Pipeline finished.'
         }
     }
 }
