@@ -2,8 +2,8 @@ pipeline {
     agent any
 
     tools {
-        jdk 'JDK17'          // Configure in Jenkins -> Global Tool Configuration
-        maven 'Maven3'       // Configure in Jenkins -> Global Tool Configuration
+        jdk 'jdk'          // Configure in Jenkins -> Global Tool Configuration
+        maven 'Maven'       // Configure in Jenkins -> Global Tool Configuration
     }
 
     stages {
