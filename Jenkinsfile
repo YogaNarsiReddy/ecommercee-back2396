@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     tools {
-        maven "Maven_3.8"   // Configure in Jenkins -> Global Tool Configuration
+        maven "Maven"   // Configure in Jenkins -> Global Tool Configuration
     }
 
     stages {
@@ -14,7 +14,7 @@ pipeline {
 
         stage('Build') {
             steps {
-                sh './mvnw clean install -DskipTests'
+                bat './mvnw clean install -DskipTests'
             }
         }
 
