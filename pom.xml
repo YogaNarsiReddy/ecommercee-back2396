@@ -97,7 +97,7 @@
 
 
   <build>
-  <finalName>myspringboot</finalName>
+  <finalName>ecommercebackend</finalName>
     <plugins>
       <!-- Maven Plugin for WAR packaging -->
       <plugin>
